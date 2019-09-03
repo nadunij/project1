@@ -26,10 +26,16 @@ export class AddEmpComponent implements OnInit {
   skills = new FormControl();
   skillset: string[] = ['Git', 'Java', 'Python', 'C', 'C#', 'C++', 'Java script', 'Angular', 'Spring boot', 'Bootstrap'];
 
-  emailFormControl = new FormControl('', [
-    Validators.required,
-    Validators.email,
-  ]);
+  
+// ---------
+  email = new FormControl('', [Validators.required, Validators.email]);
+
+  getErrorMessage() {
+    return this.email.hasError('required') ? 'You must enter a value' :
+        this.email.hasError('email') ? 'Not a valid email' :
+            '';
+  }
+// --------------
 
   matcher = new MyErrorStateMatcher();
 

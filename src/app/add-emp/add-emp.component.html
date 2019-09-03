@@ -1,17 +1,18 @@
 <h1>Enter details</h1>
 
-<mat-card>
 
-  <mat-card-header>
+<div [hidden]="submitted">
+<mat-card>
+  <!-- <mat-card-header>
     <mat-card-title>Create Contact Form</mat-card-title>
-  </mat-card-header>
+  </mat-card-header> -->
 
   <mat-card-content>
 
     <form class="example-form">
-      
+
       <!-- Name -->
-      <mat-form-field>
+      <mat-form-field class="example-full-width">
         <mat-label>Name</mat-label>
         <input matInput placeholder="Enter your name" [(ngModel)]="contactName" name="contactName"
           [ngModelOptions]="{standalone: true}" required>
@@ -20,7 +21,7 @@
       <br>
 
       <!-- DoB -->
-      <mat-form-field>
+      <mat-form-field class="example-full-width">
         <mat-label>Date of birth</mat-label>
         <input matInput [matDatepicker]="picker" placeholder="Choose a date" required>
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -30,16 +31,13 @@
       <br>
 
       <!-- Email -->
-      <mat-form-field class="example-full-width">
-        <input matInput placeholder="Email" [formControl]="emailFormControl" [errorStateMatcher]="matcher" required>
-        <mat-hint>Errors appear instantly!</mat-hint>
-        <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-          Please enter a valid email address
-        </mat-error>
-        <mat-error *ngIf="emailFormControl.hasError('required')">
-          Email is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
+
+      <div class="example-container">
+        <mat-form-field>
+          <input matInput placeholder="Enter your email" [formControl]="email" required>
+          <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+      </div>
 
       <br>
 
@@ -58,3 +56,10 @@
     <button mat-raised-button color="primary">Submit</button>
   </mat-card-actions>
 </mat-card>
+</div>
+
+
+<div [hidden]="!submitted">
+  <h4>You submitted successfully!</h4>
+  <button class="btn btn-success" (click)="newCustomer()">Add</button>
+</div>
