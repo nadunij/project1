@@ -1,3 +1,82 @@
-<p>
-  add-emp works!
-</p>
+<h1>Enter details</h1>
+
+
+<div>
+  <mat-card>
+    <mat-card-content>
+
+      <form class="example-form" #form="ngForm" (ngSubmit)="form.valid && onSubmit(form)">
+
+        <!-- Name -->
+        <mat-form-field class="example-full-width">
+          <mat-label>Name</mat-label>
+          <input matInput placeholder="Enter your name" #name="ngModel" [(ngModel)]="employee.name" name="contactName"
+            [ngModelOptions]="{standalone: true}" required>
+        </mat-form-field>
+
+        <br>
+
+        <!-- DoB -->
+        <mat-form-field class="example-full-width">
+          <mat-label>Date of birth</mat-label>
+          <input matInput [matDatepicker]="picker" placeholder="Choose a date" #dob="ngModel" [(ngModel)]="employee.dob"
+            name="dateOfBirth" required>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <br>
+
+        <!-- Email -->
+
+        <div class="example-container">
+          <mat-form-field>
+            <input matInput placeholder="Enter your email" #email="ngModel" [(ngModel)]="employee.email"
+              name="emailAddress" required email>
+            <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+          </mat-form-field>
+        </div>
+
+        <br>
+
+        <!-- skills -->
+
+        <mat-form-field>
+          <mat-select placeholder="Skills" [formControl]="skillss" multiple>
+            <mat-option *ngFor="let skill of skillList" [value]="skill">{{skill}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <!-- <mat-form-field class="example-chip-list">
+          <mat-chip-list #chipList>
+            <mat-chip *ngFor="let skill of skills" [selectable]="selectable" [removable]="removable"
+              (removed)="remove(skill)">
+              {{skill}}
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+            <input placeholder="New skill..." #skillInput [formControl]="skillCtrl" [matAutocomplete]="auto"
+              [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)" #skills="ngModel" [(ngModel)]="employee.skills"
+              name="skillSet">
+          </mat-chip-list>
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+            <mat-option *ngFor="let skill of filteredSkills | async" [value]="skill">
+              {{skill}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field> -->
+
+
+        <mat-card-actions>
+          <!-- put buttons here -->
+          <button mat-raised-button color="primary" >Submit</button>
+        </mat-card-actions>
+
+        <!-- routerLink="/add-new-emp" -->
+
+
+      </form>
+    </mat-card-content>
+
+  </mat-card>
+</div>
