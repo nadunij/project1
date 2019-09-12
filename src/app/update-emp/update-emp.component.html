@@ -11,7 +11,7 @@
         <mat-form-field class="example-full-width">
           <mat-label>ID</mat-label>
           <input matInput placeholder="Enter your ID" formControlName="id" #id
-            [(ngModel)]="employee.id">
+            [(ngModel)]="employee.id" readonly>
           <mat-error>{{getErrorMessageForName()}}</mat-error>
         </mat-form-field>
 
