@@ -4,15 +4,6 @@ import { EmployeeService } from "../service/employee.service";
 import { Employee } from "../model/employee";
 import { MatTableDataSource } from '@angular/material';
 
-// export interface PeriodicElement {
-//   id: number;
-//   employee_name: String;
-//   employee_dob: number;
-//   email: String;
-//   skills: String;
-// }
-
-// var ELEMENT_DATA: PeriodicElement[] = new Array();
 
 @Component({
   selector: 'app-view-employeeeee',
@@ -20,17 +11,19 @@ import { MatTableDataSource } from '@angular/material';
   styleUrls: ['./view-employeeeee.component.css']
 })
 
+
 export class ViewEmployeeeeeComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'employee_name', 'employee_dob', 'email', 'skills', 'delete-button'];
- 
+
+  displayedColumns: string[] = ['id', 'employee_name', 'employee_dob', 'email', 'skills', 'delete-button', 'update-button'];
+
 
   employeeInfoTabale: any;
   public dataSource = new MatTableDataSource(this.employeeInfoTabale);
 
   employees: Observable<Employee[]>;
 
-  constructor(private employeeService: EmployeeService) { }
+  constructor(private employeeService: EmployeeService) {}
 
 
 
@@ -48,14 +41,21 @@ getAllEmployes(){
 
 
   deleteEmployee(id: number) {
-    this.employeeService.deleteEmployee(id)
-      .subscribe(
+    this.employeeService.deleteEmployee(id).subscribe(
         data => {
           console.log(data);
           this.getAllEmployes();
         },
         error => console.log(error));
   }
+
+
+  updateEmployee(id: number){
+    this.employeeService.currentEmpId=id;
+
+      }
+    
+  
 
   
 

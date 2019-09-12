@@ -5,6 +5,7 @@ import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/
 import * as _moment from 'moment';
 import {default as _rollupMoment} from 'moment';
 
+
 import { EmployeeService } from "../service/employee.service";
 import { Employee } from "../model/employee";
 import { Skill } from "../model/skill";
@@ -36,22 +37,25 @@ export const MY_FORMATS = {
 })
 
 
-export class TestForm1Component implements OnInit {
 
-  employee: Employee = new Employee();
-  // employee: Employee = { employee_name:"jaja", email:"jaja@gmail.com"}
+export class TestForm1Component implements OnInit  {
+
+  // employee: Employee = new Employee();
+  // employee: Employee = { employee_name:"jaja", employee_dob: , email:"jaja@gmail.com", skills: ["Html", "CSS"]}
 
  
-  skillss: any;
+
+  skillsObject: any;
   currentIndex: number;
   form: FormGroup;
-    
+    // skills: Skill[];
 
   // --validation--
 
   employee_name = new FormControl("", [Validators.required, Validators.maxLength(50)]);
   employee_dob = new FormControl(moment(), Validators.required);
   email = new FormControl("" , [Validators.required, Validators.email]);
+  skills = new FormControl();
 
   getErrorMessageForEmail() {
     return this.email.hasError('required') ? 'You must enter a value' :
@@ -69,9 +73,8 @@ export class TestForm1Component implements OnInit {
             '';
   }
 
-   //multiple selection
- skills = new FormControl();
- skillList: String[] = new Array();
+   //multiple selection - display skill names
+ skillList: Skill[] = new Array();
 // -------------------------
 
   constructor(fb: FormBuilder, private employeeService: EmployeeService, private skillService: SkillService) {
@@ -95,10 +98,9 @@ export class TestForm1Component implements OnInit {
    onSubmit() {
     console.log("model-based form submitted");
     console.log(this.form.value);
-    console.log(this.employee)
+    // console.log(this.employee)
     this.save();
     // this.form.reset();
-
 }
 
  delay(ms: number) {
@@ -106,22 +108,22 @@ export class TestForm1Component implements OnInit {
 }
 
   async ngOnInit() {
-    this.skillService.getSkillsList()
-      .subscribe(data => {
-        this.skillss=data;
+    this.skillService.getSkillsList().subscribe(data => {
+        this.skillsObject=data;
         error => console.log(error);
         
       });
       await this.delay(300);
-      console.log(this.skillss);
+      console.log(this.skillsObject);
 
-      for (let i in this.skillss) {
-        this.skillList[i]=String(this.skillss[i].skill_name);
+      for (let i in this.skillsObject) {
+        // this.skillList[i]=String(this.skillsObject[i].skill_id).concat(" - ").concat(this.skillsObject[i].skill_name);
+this.skillList[i] = this.skillsObject[i];
       }
     
-      console.log(this.skillList);
+      // console.log(this.skillList);
 
-      console.log(this.skillss[0].skill_name);
+      // console.log(this.skillss[1].skill_name);
   }
 
   //Current Index Setter

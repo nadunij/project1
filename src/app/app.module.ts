@@ -19,7 +19,6 @@ import {MatDialogModule} from '@angular/material/dialog';
 
 import { AppComponent } from './app.component';
 import { AddEmpComponent } from './add-emp/add-emp.component';
-import { ViewEmpComponent } from './view-emp/view-emp.component';
 import { UpdateEmpComponent } from './update-emp/update-emp.component';
 import { MyNavComponent } from './my-nav/my-nav.component';
 import { MyDashboardComponent } from './my-dashboard/my-dashboard.component';
@@ -37,7 +36,6 @@ const appRoutes: Routes = [
   { path: 'view-employeeeee', component: ViewEmployeeeeeComponent },
 
   { path: 'my-dashboard', component: MyDashboardComponent },
-  { path: 'view-emp', component: ViewEmpComponent },
   { path: 'update-emp', component: UpdateEmpComponent },
   { path: 'manage-skills', component: ManageSkillsComponent }
 ];
@@ -46,7 +44,6 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     AddEmpComponent,
-    ViewEmpComponent,
     UpdateEmpComponent,
     MyNavComponent,
     MyDashboardComponent,
