@@ -34,9 +34,23 @@ export class ViewEmployeeeeeComponent implements OnInit {
 getAllEmployes(){
   this.employeeService.getEmployeesList().subscribe(data=>
     {
-      console.log(data);
       this.employeeInfoTabale=data;
-      this.dataSource.data = this.employeeInfoTabale;})
+      this.employeeInfoTabale.forEach(element => {
+        let skills: any = element.skills
+        let skillSet : string ="";
+        for(let i=0; i< skills.length; i++) {
+          console.log(skills[i]);
+          if(i === skills.length - 1) {
+          skillSet = skillSet + skills[i].skill_name;
+          }
+          else {
+            skillSet = skillSet + skills[i].skill_name + ", ";
+          }
+        };
+        element.skills = skillSet;
+      });
+      this.dataSource.data = this.employeeInfoTabale;
+    })
 }
 
 

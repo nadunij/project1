@@ -36,8 +36,6 @@ export const MY_FORMATS = {
 })
 export class UpdateEmpComponent implements OnInit {
   
-  // employee: Employee;
-  // employee: Employee = new Employee();
   employee: any = {};
 
   skillsObject: any;
@@ -84,27 +82,19 @@ export class UpdateEmpComponent implements OnInit {
   }
 
 
-  // save() {
-  //   this.employeeService.createEmployee(this.form.value).subscribe(data =>
-  //     console.log(data),
-  //     error => console.log(error));
-  //   // console.log(this.employee);
-  // }
-
   onUpdate() {
     console.log("model-based form updated");
     console.log(this.form.value);
 
-    // this.employeeService.updateEmployee(this.form.value).subscribe(data => {
-    //   console.log(data),
-    //     error => console.log(error)
-    //     // console.log(this.form.value)
-    // });
-
-    this.employeeService.createEmployee(this.form.value).subscribe(data => {
+    this.employeeService.updateEmployee(this.form.value).subscribe(data => {
       console.log(data),
-      error => console.log(error)
+        error => console.log(error)
     });
+
+    // this.employeeService.createEmployee(this.form.value).subscribe(data => {
+    //   console.log(data),
+    //   error => console.log(error)
+    // });
 
   }
 
@@ -113,17 +103,24 @@ export class UpdateEmpComponent implements OnInit {
   }
 
   async ngOnInit() {
-    // this.employee.employee_dob = new Date();
     this.employeeService.getEmployee(this.employeeService.currentEmpId).subscribe(data => {
       this.employee = data;
-      // console.log(this.employee)
-    });
+      console.log(this.employee)
+      let skills = this.employee.skills
+      let skillNames: string = "";
+      for(let i=0; i<= skills.length; i++){
+        skillNames = skillNames + skills[i].skill_name;
+          }
+          this.employee.skills = skillNames;
+
+      });
 
     this.skillService.getSkillsList().subscribe(data => {
       this.skillsObject = data;
       error => console.log(error);
 
     });
+
     await this.delay(300);
     console.log(this.skillsObject);
 
