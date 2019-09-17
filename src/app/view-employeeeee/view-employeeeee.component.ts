@@ -39,7 +39,7 @@ getAllEmployes(){
         let skills: any = element.skills
         let skillSet : string ="";
         for(let i=0; i< skills.length; i++) {
-          console.log(skills[i]);
+          // console.log(skills[i]);
           if(i === skills.length - 1) {
           skillSet = skillSet + skills[i].skill_name;
           }
@@ -47,6 +47,7 @@ getAllEmployes(){
             skillSet = skillSet + skills[i].skill_name + ", ";
           }
         };
+
         element.skills = skillSet;
       });
       this.dataSource.data = this.employeeInfoTabale;

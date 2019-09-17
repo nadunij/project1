@@ -35,9 +35,6 @@
             <input matInput placeholder="Enter your email" formControlName="email">
             <mat-error *ngIf="email.invalid">{{getErrorMessageForEmail()}}</mat-error>
             <div *ngIf="email.invalid && !email.pristine">
-                <!-- <p *ngIf="email.errors.email">Valid email is required.</p> -->
-                <!-- <p *ngIf="email.errors.pattern">The email address must contain at least the @ character</p>
-                <p *ngIf="email.errors.emailDomain">Email must be on the codecraft.tv domain</p> -->
               </div>
           </mat-form-field>
         </div>
@@ -48,14 +45,14 @@
 
         <mat-form-field class="example-full-width">
           <mat-select placeholder="Skills" [formControl]="skills" multiple>
-            <mat-option *ngFor="let skill of skillList; let i = index" [value]="skill"> {{skill.skill_name}}</mat-option>
+            <mat-option *ngFor="let skill of skillsObject" [value]="skill"> {{skill.skill_name}}</mat-option>
           </mat-select>
         </mat-form-field>
 
 
         <mat-card-actions>
           <!-- put buttons here -->
-          <button mat-raised-button color="primary" [disabled]="!form.valid" >Submit</button>
+          <button mat-raised-button color="primary" [disabled]="!form.valid" (click)="openDialog()" >Submit</button>
         </mat-card-actions>
 
         <!-- routerLink="/add-new-emp" -->

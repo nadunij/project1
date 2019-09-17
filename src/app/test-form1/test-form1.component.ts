@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import * as _moment from 'moment';
 import { default as _rollupMoment } from 'moment';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 
 import { EmployeeService } from "../service/employee.service";
 import { Employee } from "../model/employee";
 import { Skill } from "../model/skill";
 import { SkillService } from "../service/skill.service";
+import { AddNewEmpComponent } from '../add-new-emp/add-new-emp.component';
+
 
 const moment = _rollupMoment || _moment;
 
@@ -24,6 +27,7 @@ export const MY_FORMATS = {
     monthYearA11yLabel: 'MMMM YYYY',
   },
 };
+
 
 @Component({
   selector: 'app-test-form1',
@@ -67,11 +71,8 @@ export class TestForm1Component implements OnInit {
       '';
   }
 
-  //multiple selection - display skill names
-  skillList: Skill[] = new Array();
-  // -------------------------
 
-  constructor(fb: FormBuilder, private employeeService: EmployeeService, private skillService: SkillService) {
+  constructor(fb: FormBuilder, private employeeService: EmployeeService, private skillService: SkillService, public dialog: MatDialog) {
     this.form = fb.group({
       "employee_name": this.employee_name,
       "employee_dob": this.employee_dob,
@@ -80,11 +81,9 @@ export class TestForm1Component implements OnInit {
     });
   }
 
-
-
   save() {
     this.employeeService.createEmployee(this.form.value).subscribe(data =>
-      console.log(data),
+      // console.log(data),
       error => console.log(error));
   }
 
@@ -92,7 +91,6 @@ export class TestForm1Component implements OnInit {
     console.log("model-based form submitted");
     console.log(this.form.value);
     this.save();
-    this.form.reset();
   }
 
   delay(ms: number) {
@@ -107,18 +105,29 @@ export class TestForm1Component implements OnInit {
     });
 
     await this.delay(300);
-    // console.log(this.skillsObject);
-
-    for (let i in this.skillsObject) {
-      this.skillList[i] = this.skillsObject[i];
-    }
+    console.log(this.skillsObject);
 
   }
 
   //Current Index Setter
-  setCurrentIndex(index) {
-    this.currentIndex = index;
-    console.log(this.currentIndex);
+  // setCurrentIndex(index) {
+  //   this.currentIndex = index;
+  //   console.log(this.currentIndex);
+  // }
+
+
+  openDialog(): void {
+
+    const dialogRef = this.dialog.open(AddNewEmpComponent, {
+      width: '500px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+          this.form.reset();
+    });
+
+
   }
 
 }
