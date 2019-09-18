@@ -6,6 +6,4 @@ export class Employee {
     employee_dob: Date;
     email: String;
     skill: Skill[];
-    // skills: Array<String>;
-    // skills: String[];
 }

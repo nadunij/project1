@@ -43,12 +43,14 @@ export const MY_FORMATS = {
 export class UpdateEmpComponent implements OnInit {
 
   employee: any = {};
+  empSkills: any = {};
+  skillNames: string = "";
 
   skillsObject: any;
-  currentIndex: number;
   form: FormGroup;
 
 
+  //data binding and validation
   id = new FormControl("", [Validators.required]);
   employee_name = new FormControl("", [Validators.required, Validators.maxLength(50)]);
   employee_dob = new FormControl(moment(), Validators.required);
@@ -103,34 +105,29 @@ export class UpdateEmpComponent implements OnInit {
 
   }
 
-  delay(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
-
   
-  async ngOnInit() {
+   ngOnInit() {
 
     this.employeeService.getEmployee(this.employeeService.currentEmpId).subscribe(data => {
       this.employee = data;
-      console.log("**********************");
-      console.log(this.employee);
+      console.log(this.employee.skills);
 
-      let empSkills: any = this.employee.skills
-      let skillNames: string = "";
+      this.empSkills = this.employee.skills;
 
-          for(let i=0; i< empSkills.length; i++) {
-            // console.log(skills[i]);
-            if(i === empSkills.length - 1) {
-              skillNames = skillNames + empSkills[i].skill_name;
+          for(let i=0; i< this.empSkills.length; i++) {
+            if(i === this.empSkills.length - 1) {
+              this.skillNames = this.skillNames + this.empSkills[i].skill_name;
             }
             else {
-              skillNames = skillNames + empSkills[i].skill_name + ", ";
+              this.skillNames = this.skillNames + this.empSkills[i].skill_name + ", ";
             }
           };
 
-          this.employee.skills = skillNames;
-          console.log(empSkills)
-          console.log(skillNames)
+          this.employee.skills = this.skillNames;
+
+          console.log(this.empSkills)
+      //     console.log(skillNames)
+      // console.log(empSkills);
 
       });
 
@@ -139,9 +136,6 @@ export class UpdateEmpComponent implements OnInit {
       error => console.log(error);
 
     });
-
-    await this.delay(300);
-    console.log(this.skillsObject);
 
 
   }

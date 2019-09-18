@@ -20,7 +20,6 @@ import { AppComponent } from './app.component';
 import { AddEmpComponent } from './add-emp/add-emp.component';
 import { UpdateEmpComponent } from './update-emp/update-emp.component';
 import { MyNavComponent } from './my-nav/my-nav.component';
-import { MyDashboardComponent } from './my-dashboard/my-dashboard.component';
 import { ManageSkillsComponent } from './manage-skills/manage-skills.component';
 import { AddNewEmpComponent } from './add-new-emp/add-new-emp.component';
 import { TestForm1Component } from './test-form1/test-form1.component';
@@ -35,7 +34,6 @@ import { UpdateEmpSnackbarComponent } from './update-emp-snackbar/update-emp-sna
     AddEmpComponent,
     UpdateEmpComponent,
     MyNavComponent,
-    MyDashboardComponent,
     ManageSkillsComponent,
     AddNewEmpComponent,
     TestForm1Component,

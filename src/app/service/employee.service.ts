@@ -8,6 +8,7 @@ import { environment } from '../../environments/environment'
 })
 
 export class EmployeeService {
+
   currentEmpId: number;
 
   constructor(private http: HttpClient) { }
@@ -27,10 +28,6 @@ export class EmployeeService {
   updateEmployee(value: any): Observable<Object> {
     return this.http.put(`${environment.url}/employee`, value);
   }
-
-  // updateEmployee(employee: object): Observable<Object> {
-  //   return this.http.put(`${environment.url}/employee`, employee);
-  // }
 
   deleteEmployee(id: number): Observable<any> {
     return this.http.delete(`${environment.url}/employee/${id}`, { responseType: 'text' });

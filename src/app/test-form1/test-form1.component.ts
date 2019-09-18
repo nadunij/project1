@@ -6,10 +6,7 @@ import * as _moment from 'moment';
 import { default as _rollupMoment } from 'moment';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
-
 import { EmployeeService } from "../service/employee.service";
-import { Employee } from "../model/employee";
-import { Skill } from "../model/skill";
 import { SkillService } from "../service/skill.service";
 import { AddNewEmpComponent } from '../add-new-emp/add-new-emp.component';
 
@@ -45,30 +42,27 @@ export const MY_FORMATS = {
 export class TestForm1Component implements OnInit {
 
   skillsObject: any;
-  currentIndex: number;
   form: FormGroup;
 
-  // --validation--
+  // --validation and data binding--
 
   employee_name = new FormControl("", [Validators.required, Validators.maxLength(50)]);
   employee_dob = new FormControl(moment(), Validators.required);
   email = new FormControl("", [Validators.required, Validators.email]);
   skills = new FormControl();
 
-  getErrorMessageForEmail() {
-    return this.email.hasError('required') ? 'You must enter a value' :
-      this.email.hasError('email') ? 'Not a valid email' :
-        '';
-  }
 
   getErrorMessageForName() {
-    return this.employee_name.hasError('required') ? 'You must enter a value' :
-      '';
+    return this.employee_name.hasError('required') ? 'You must enter a value' : '';
   }
 
   getErrorMessageForDoB() {
-    return this.employee_dob.hasError('required') ? 'You must choose a value' :
-      '';
+    return this.employee_dob.hasError('required') ? 'You must choose a value' : '';
+  }
+
+  getErrorMessageForEmail() {
+    return this.email.hasError('required') ? 'You must enter a value' :
+      this.email.hasError('email') ? 'Not a valid email' : '';
   }
 
 
@@ -93,9 +87,6 @@ export class TestForm1Component implements OnInit {
     this.save();
   }
 
-  delay(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
 
   async ngOnInit() {
     this.skillService.getSkillsList().subscribe(data => {
@@ -104,16 +95,8 @@ export class TestForm1Component implements OnInit {
 
     });
 
-    await this.delay(300);
-    console.log(this.skillsObject);
 
   }
-
-  //Current Index Setter
-  // setCurrentIndex(index) {
-  //   this.currentIndex = index;
-  //   console.log(this.currentIndex);
-  // }
 
 
   openDialog(): void {
@@ -124,7 +107,8 @@ export class TestForm1Component implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-          this.form.reset();
+      // this.form.reset();
+      window.location.reload();
     });
 
 
