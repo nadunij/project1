@@ -1,6 +1,5 @@
 <h1>Update details</h1>
 
-
 <div>
   <mat-card>
     <mat-card-content>
@@ -10,8 +9,7 @@
         <!-- id -->
         <mat-form-field class="example-full-width">
           <mat-label>ID</mat-label>
-          <input matInput placeholder="Enter your ID" formControlName="id" #id
-            [(ngModel)]="employee.id" readonly>
+          <input matInput placeholder="Enter your ID" formControlName="id" #id [(ngModel)]="employee.id" readonly>
           <mat-error>{{getErrorMessageForName()}}</mat-error>
         </mat-form-field>
 
@@ -45,9 +43,8 @@
 
         <mat-form-field class="example-full-width">
           <mat-label>Date of birth</mat-label>
-          <input matInput [matDatepicker]="dp" placeholder="Choose a date" [formControl]="employee_dob" 
+          <input matInput [matDatepicker]="dp" placeholder="Choose a date" [formControl]="employee_dob"
             [(ngModel)]="employee.employee_dob">
-            <!-- employee_dob -->
           <mat-error>{{getErrorMessageForDoB()}}</mat-error>
           <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
           <mat-datepicker #dp></mat-datepicker>
@@ -58,20 +55,20 @@
         <!-- skills -->
 
         <mat-form-field class="example-full-width">
-          <mat-select placeholder="Skills" [formControl]="skills"  [(ngModel)]="employee.skills" multiple>
-              <!-- skills -->
-            <mat-option *ngFor="let skill of skillList; let i = index" [value]="skill"> {{skill}}</mat-option>
+          <mat-label>Skills</mat-label>
+          <mat-select placeholder="Skills" [formControl]="skills" [(ngModel)]="empSkills" multiple>
+            <mat-option *ngFor="let skill of skillsObject" [value]="skill"> {{skill.skill_name}}</mat-option>
           </mat-select>
+          {{skillNames}} 
+
+          <!-- skillNames string -->
+          <!-- {{employee.skills}}  -->
         </mat-form-field>
 
 
         <mat-card-actions>
-          <!-- put buttons here -->
-          <button mat-raised-button color="primary" [disabled]="!form.valid">Update</button>
+          <button mat-raised-button color="primary" [disabled]="!form.valid" (click)="openSnackBar()">Update</button>
         </mat-card-actions>
-
-        <!-- routerLink="/add-new-emp" -->
-
 
       </form>
     </mat-card-content>

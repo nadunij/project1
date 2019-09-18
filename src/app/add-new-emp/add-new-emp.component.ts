@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+
 
 @Component({
   selector: 'app-add-new-emp',
@@ -7,7 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddNewEmpComponent implements OnInit {
 
-  constructor() { }
+  constructor(public dialogRef: MatDialogRef<AddNewEmpComponent> ) { }
+
+    onClick(): void {
+      this.dialogRef.close();
+    }
 
   ngOnInit() {
   }

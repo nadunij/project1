@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import {MomentDateAdapter} from '@angular/material-moment-adapter';
-import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import * as _moment from 'moment';
-import {default as _rollupMoment} from 'moment';
-
+import { default as _rollupMoment } from 'moment';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 import { EmployeeService } from "../service/employee.service";
-import { Employee } from "../model/employee";
-import { Skill } from "../model/skill";
 import { SkillService } from "../service/skill.service";
+import { AddNewEmpComponent } from '../add-new-emp/add-new-emp.component';
+
 
 const moment = _rollupMoment || _moment;
 
@@ -25,111 +25,93 @@ export const MY_FORMATS = {
   },
 };
 
+
 @Component({
   selector: 'app-test-form1',
   templateUrl: './test-form1.component.html',
   styleUrls: ['./test-form1.component.css'],
   providers: [
-    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
 
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
   ],
 })
 
 
 
-export class TestForm1Component implements OnInit  {
-
-  // employee: Employee = new Employee();
-  // employee: Employee = { employee_name:"jaja", employee_dob: , email:"jaja@gmail.com", skills: ["Html", "CSS"]}
-
- 
+export class TestForm1Component implements OnInit {
 
   skillsObject: any;
-  currentIndex: number;
   form: FormGroup;
-    // skills: Skill[];
 
-  // --validation--
+  // --validation and data binding--
 
   employee_name = new FormControl("", [Validators.required, Validators.maxLength(50)]);
   employee_dob = new FormControl(moment(), Validators.required);
-  email = new FormControl("" , [Validators.required, Validators.email]);
+  email = new FormControl("", [Validators.required, Validators.email]);
   skills = new FormControl();
 
-  getErrorMessageForEmail() {
-    return this.email.hasError('required') ? 'You must enter a value' :
-        this.email.hasError('email') ? 'Not a valid email' :
-            '';
-  }
 
   getErrorMessageForName() {
-    return this.employee_name.hasError('required') ? 'You must enter a value' :
-            '';
+    return this.employee_name.hasError('required') ? 'You must enter a value' : '';
   }
 
   getErrorMessageForDoB() {
-    return this.employee_dob.hasError('required') ? 'You must choose a value' :
-            '';
+    return this.employee_dob.hasError('required') ? 'You must choose a value' : '';
   }
 
-   //multiple selection - display skill names
- skillList: Skill[] = new Array();
-// -------------------------
+  getErrorMessageForEmail() {
+    return this.email.hasError('required') ? 'You must enter a value' :
+      this.email.hasError('email') ? 'Not a valid email' : '';
+  }
 
-  constructor(fb: FormBuilder, private employeeService: EmployeeService, private skillService: SkillService) {
+
+  constructor(fb: FormBuilder, private employeeService: EmployeeService, private skillService: SkillService, public dialog: MatDialog) {
     this.form = fb.group({
       "employee_name": this.employee_name,
       "employee_dob": this.employee_dob,
       "email": this.email,
       "skills": this.skills
-      });
-   }
-
-
-
-  save() {
-    this.employeeService.createEmployee(this.form.value).subscribe(data => 
-      console.log(data), 
-      error => console.log(error));
-    // console.log(this.employee);
+    });
   }
 
-   onSubmit() {
+  save() {
+    this.employeeService.createEmployee(this.form.value).subscribe(data =>
+      // console.log(data),
+      error => console.log(error));
+  }
+
+  onSubmit() {
     console.log("model-based form submitted");
     console.log(this.form.value);
-    // console.log(this.employee)
     this.save();
-    // this.form.reset();
-}
+  }
 
- delay(ms: number) {
-  return new Promise( resolve => setTimeout(resolve, ms) );
-}
 
   async ngOnInit() {
     this.skillService.getSkillsList().subscribe(data => {
-        this.skillsObject=data;
-        error => console.log(error);
-        
-      });
-      await this.delay(300);
-      console.log(this.skillsObject);
+      this.skillsObject = data;
+      error => console.log(error);
 
-      for (let i in this.skillsObject) {
-        // this.skillList[i]=String(this.skillsObject[i].skill_id).concat(" - ").concat(this.skillsObject[i].skill_name);
-this.skillList[i] = this.skillsObject[i];
-      }
-    
-      // console.log(this.skillList);
+    });
 
-      // console.log(this.skillss[1].skill_name);
+
   }
 
-  //Current Index Setter
-setCurrentIndex(index){
-  this.currentIndex = index;
-  console.log(this.currentIndex);
-}
+
+  openDialog(): void {
+
+    const dialogRef = this.dialog.open(AddNewEmpComponent, {
+      width: '500px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      // this.form.reset();
+      window.location.reload();
+    });
+
+
+  }
 
 }

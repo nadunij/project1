@@ -92,6 +92,25 @@ export class AddEmpComponent implements OnInit {
     this.dateOfBirth=new Date();
   }
 
+
+
+// --------------------------------------------------------------
+  // delay(ms: number) {
+  //   return new Promise(resolve => setTimeout(resolve, ms));
+  // }
+
+  // async ngOnInit() {
+  //   this.skillService.getSkillsList().subscribe(data => {
+  //     this.skillsObject = data;
+  //     error => console.log(error);
+  //   });
+    // await this.delay(300);
+    // console.log(this.skillsObject);
+  // }
+// ----------------------------------------------------------------------
+
+
+
 // ----------------
   newEmployee(): void {
     this.submitted = false;

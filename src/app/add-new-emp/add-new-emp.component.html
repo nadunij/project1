@@ -1,10 +1,8 @@
 
+<h1 mat-dialog-title>You submitted successfully</h1>
 
-<div>
-  <h4>You submitted successfully!</h4>
-  <!-- <button class="btn btn-success" (click)="newCustomer()">Add</button> -->
-  <mat-card-actions>
-    <button mat-raised-button color="primary" routerLink="/add-emp">Add another
-      employee</button>
-  </mat-card-actions>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="onClick()">Add another employee</button>
+  <!-- routerLink="/add-new-emp" -->
+  <button mat-raised-button color="primary" routerLink="/view-employeeeee" (click)="onClick()">View Employee</button>
 </div>

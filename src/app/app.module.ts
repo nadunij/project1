@@ -13,32 +13,20 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatIconModule} from '@angular/material/icon';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import {MatDialogModule} from '@angular/material/dialog';
-
-
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 import { AppComponent } from './app.component';
 import { AddEmpComponent } from './add-emp/add-emp.component';
 import { UpdateEmpComponent } from './update-emp/update-emp.component';
 import { MyNavComponent } from './my-nav/my-nav.component';
-import { MyDashboardComponent } from './my-dashboard/my-dashboard.component';
 import { ManageSkillsComponent } from './manage-skills/manage-skills.component';
 import { AddNewEmpComponent } from './add-new-emp/add-new-emp.component';
 import { TestForm1Component } from './test-form1/test-form1.component';
 import { ViewEmployeeeeeComponent } from './view-employeeeee/view-employeeeee.component';
-// import { ViewEmployeeeeeComponent } from './view-employeeeee/view-employeeeee.component';
+import { AppRoutingModule } from './/app-routing.module';
+import { UpdateEmpSnackbarComponent } from './update-emp-snackbar/update-emp-snackbar.component';
 
-const appRoutes: Routes = [
-  { path: 'add-emp', component: AddEmpComponent },
-  { path: 'add-new-emp', component: AddNewEmpComponent },
-
-  { path: 'test-form1', component: TestForm1Component },
-  { path: 'view-employeeeee', component: ViewEmployeeeeeComponent },
-
-  { path: 'my-dashboard', component: MyDashboardComponent },
-  { path: 'update-emp', component: UpdateEmpComponent },
-  { path: 'manage-skills', component: ManageSkillsComponent }
-];
 
 @NgModule({
   declarations: [
@@ -46,16 +34,17 @@ const appRoutes: Routes = [
     AddEmpComponent,
     UpdateEmpComponent,
     MyNavComponent,
-    MyDashboardComponent,
     ManageSkillsComponent,
     AddNewEmpComponent,
     TestForm1Component,
-    ViewEmployeeeeeComponent
+    ViewEmployeeeeeComponent,
+    UpdateEmpSnackbarComponent
     
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    RouterModule,
     MatButtonModule,
     LayoutModule,
     MatToolbarModule,
@@ -82,7 +71,8 @@ const appRoutes: Routes = [
     MatAutocompleteModule,
     MatMomentDateModule,
     MatDialogModule,
-    RouterModule.forRoot(appRoutes),
+    AppRoutingModule,
+    MatSnackBarModule
     
   ],
   providers: [],

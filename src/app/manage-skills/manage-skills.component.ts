@@ -47,6 +47,7 @@ skillInfoTabale: any;
       console.log(data), 
       error => console.log(error)
       );
+      this.getAllSkills();
     // console.log(this.skill);
     
   }
@@ -58,7 +59,7 @@ skillInfoTabale: any;
     console.log("skill is submitted");
     // console.log(this.form2.value);
     this.save();
-    this.getAllSkills();
+    // this.getAllSkills();
     this.form2.reset(); //input field clearing
 
 }

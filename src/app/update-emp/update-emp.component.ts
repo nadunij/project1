@@ -4,11 +4,17 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import * as _moment from 'moment';
 import { default as _rollupMoment } from 'moment';
+import { Router } from '@angular/router';
+import {MatSnackBar} from '@angular/material';
+
 
 import { EmployeeService } from "../service/employee.service";
 import { Employee } from "../model/employee";
 import { Skill } from "../model/skill";
 import { SkillService } from "../service/skill.service";
+import { UpdateEmpSnackbarComponent } from '../update-emp-snackbar/update-emp-snackbar.component';
+
+
 
 const moment = _rollupMoment || _moment;
 
@@ -35,16 +41,16 @@ export const MY_FORMATS = {
   ],
 })
 export class UpdateEmpComponent implements OnInit {
-  
-  // employee: Employee;
-  // employee: Employee = new Employee();
+
   employee: any = {};
+  empSkills: any = {};
+  skillNames: string = "";
 
   skillsObject: any;
-  currentIndex: number;
   form: FormGroup;
 
 
+  //data binding and validation
   id = new FormControl("", [Validators.required]);
   employee_name = new FormControl("", [Validators.required, Validators.maxLength(50)]);
   employee_dob = new FormControl(moment(), Validators.required);
@@ -67,12 +73,9 @@ export class UpdateEmpComponent implements OnInit {
       '';
   }
 
-  //multiple selection - display skill names
-  skillList: Skill[] = new Array();
-  // -------------------------
 
 
-  constructor(fb: FormBuilder, private employeeService: EmployeeService, private skillService: SkillService) {
+  constructor(fb: FormBuilder, private employeeService: EmployeeService, private skillService: SkillService, public router: Router, public snackBar: MatSnackBar) {
 
     this.form = fb.group({
       "id": this.id,
@@ -84,60 +87,63 @@ export class UpdateEmpComponent implements OnInit {
   }
 
 
-  // save() {
-  //   this.employeeService.createEmployee(this.form.value).subscribe(data =>
-  //     console.log(data),
-  //     error => console.log(error));
-  //   // console.log(this.employee);
-  // }
-
   onUpdate() {
     console.log("model-based form updated");
     console.log(this.form.value);
 
-    // this.employeeService.updateEmployee(this.form.value).subscribe(data => {
+    this.employeeService.updateEmployee(this.form.value).subscribe(data => {
+      console.log(data),
+        error => console.log(error)
+    });
+
+    // this.employeeService.createEmployee(this.form.value).subscribe(data => {
     //   console.log(data),
-    //     error => console.log(error)
-    //     // console.log(this.form.value)
+    //   error => console.log(error)
     // });
 
-    this.employeeService.createEmployee(this.form.value).subscribe(data => {
-      console.log(data),
-      error => console.log(error)
-    });
+    this.router.navigate(['/view-employeeeee']);
 
   }
 
-  delay(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
+  
+   ngOnInit() {
 
-  async ngOnInit() {
-    // this.employee.employee_dob = new Date();
     this.employeeService.getEmployee(this.employeeService.currentEmpId).subscribe(data => {
       this.employee = data;
-      // console.log(this.employee)
-    });
+      console.log(this.employee.skills);
+
+      this.empSkills = this.employee.skills;
+
+          for(let i=0; i< this.empSkills.length; i++) {
+            if(i === this.empSkills.length - 1) {
+              this.skillNames = this.skillNames + this.empSkills[i].skill_name;
+            }
+            else {
+              this.skillNames = this.skillNames + this.empSkills[i].skill_name + ", ";
+            }
+          };
+
+          this.employee.skills = this.skillNames;
+
+          console.log(this.empSkills)
+      //     console.log(skillNames)
+      // console.log(empSkills);
+
+      });
 
     this.skillService.getSkillsList().subscribe(data => {
       this.skillsObject = data;
       error => console.log(error);
 
     });
-    await this.delay(300);
-    console.log(this.skillsObject);
 
-    for (let i in this.skillsObject) {
-      // this.skillList[i]=String(this.skillsObject[i].skill_id).concat(" - ").concat(this.skillsObject[i].skill_name);
-      this.skillList[i] = this.skillsObject[i];
-    }
 
   }
 
-  //Current Index Setter
-  setCurrentIndex(index) {
-    this.currentIndex = index;
-    console.log(this.currentIndex);
+  openSnackBar() {
+    this.snackBar.openFromComponent(UpdateEmpSnackbarComponent, {
+      duration: 1500,
+    });
   }
 
 }
